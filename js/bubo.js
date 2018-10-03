@@ -1,5 +1,5 @@
-const API_BASE_URL = 'https://api.bubo.id'
-// const API_BASE_URL = 'https://stage-api.bubo.id'
+// const API_BASE_URL = 'https://api.bubo.id'
+const API_BASE_URL = 'https://stage-api.bubo.id'
 ~
 angular
   .module('bubo', [])
@@ -20,18 +20,12 @@ angular
         }
       }
      }
-
-     
- 
-
-     
      $http(reqs).then(function(datas){
        console.log(datas);
        $scope.items = [];
        angular.forEach(datas.data.response.data, function(value, key) {
            $scope.items.push(value);
        });
-       $scope.totalCount = datas.count;
        console.log($scope.items);
      });
 
@@ -65,44 +59,24 @@ angular
       title: 'bubo',
       subTitle: 'educate'
     }
-    $scope.list = [];
-
- 
   })
 
   .controller('register', function($scope, $http, $document) {
     $scope.account = {
       id: null,
       fullname: null,
-      email: null
-    }
-    $scope.sebaran = {
-      confirm: false,
-      title: "",
-      description: "",
       media: "",
-      latlng: "",
-      address: "",
-      account: {
-        uid: null,
-        fullname: null,
-        email: null
-      }
-    }
-    $scope.mapUpdate = function(latlng){
-      $scope.sebaran.latlng = latlng;
-    }
-    $scope.geoUpdate = function(address){
-      $scope.sebaran.address = address.formatted_address;
+      email: null
     }
     $scope.step = {
       id: 1,
       error: "",
       one: function(){
         $scope.step.id++;
-        $scope.sebaran.account.uid = document.getElementById("id").innerText;
-        $scope.sebaran.account.fullname = document.getElementById("name").innerText;
-        $scope.sebaran.account.email = document.getElementById("email").innerText;
+        $scope.account.uid = document.getElementById("id").innerText;
+        $scope.account.fullname = document.getElementById("name").innerText;
+        $scope.account.email = document.getElementById("email").innerText;
+
         var reqs = {
           method: 'POST',
           url: API_BASE_URL,
@@ -123,15 +97,12 @@ angular
          $http(reqs).then(function(datasreg){
           console.log(datasreg.data.response.data);
           $scope.itemreg = [];
-     
           angular.forEach(datasreg.data.response.data, function(value, key) {
     
-            if(value.admin_email == $scope.sebaran.account.email){
+            if(value.admin_email == $scope.account.email){
             console.log("punya sales");
             $scope.itemreg.push(value);
-          };
-    
-           
+          };    
           });
           $scope.totalCount = datasreg.count;
           console.log($scope.itemreg);
@@ -156,7 +127,7 @@ angular
       },
       send: function(){
      //   var model = $scope.model = {};
-        console.log($scope.sebaran.account.fullname);
+        console.log($scope.account.fullname);
         var req = {
           method: 'POST',
           url: API_BASE_URL,
@@ -176,14 +147,14 @@ angular
                           "latlong":$scope.latlong,
                           "no_telp":$scope.no_telp,
                           "kode_pos":$scope.kodepos,
-                          "logo_url":$scope.sebaran.media,
+                          "logo_url":$scope.media,
                           "merchant": "bubo",
                           "provinsi":$scope.provinsi,
                           "kecamatan":$scope.kecamatan,
                           "kelurahan":$scope.kelurahan,
                           "link_mode": "code",
-                          "admin_email":$scope.sebaran.account.email,
-                          "penanggung_jawab": $scope.sebaran.account.fullname,
+                          "admin_email":$scope.account.email,
+                          "penanggung_jawab": $scope.account.fullname,
             }
           }
          }
@@ -192,19 +163,7 @@ angular
           console.log(datas + 'list hasil');
           $scope.step.id = 2;
         });
-
-    
-
         $scope.step.next();
-
-        
-
-
-        // $scope.post('/submission', $scope.sebaran, function(resp){
-        //   if(resp.status !== true){
-        //     $scope.error = resp.message;
-        //   }
-        // });
       },
       done: function(){
         $scope.register = false;
@@ -217,8 +176,8 @@ angular
           if(error === null) {
             var img = document.getElementById("media");
             img.style.backgroundImage = "url("+result[0].url+")";
-            $scope.sebaran.media = result[0].url;
-            console.log($scope.sebaran);
+            $scope.media = result[0].url;
+            console.log($scope.media);
             $scope.$apply();
           } 
         });
@@ -253,33 +212,5 @@ angular
       'theme': 'dark',
       'onsuccess': onSuccess,
       'onfailure': onFailure
-    });
-  }
-
-  
-  var map;
-  function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: -6.2349359, lng: 106.7529515},
-      zoom: 13
-    });
-
-    map.addListener('dragend', function() {
-      window.setTimeout(function() {
-        var scope = angular.element(document.body).scope();
-        scope.$apply(function () {
-          scope.mapUpdate(map.getCenter().toUrlValue(12));
-        });
-        geocoder = new google.maps.Geocoder();
-        geocoder.geocode( { 'location': map.getCenter()}, function(results, status) {
-          if (status == 'OK') {
-            scope.$apply(function () {
-              scope.geoUpdate(results[0] || "");
-            });
-          } else {
-            console.log('Geocode was not successful for the following reason: ' + status);
-          }
-        });
-      }, 1000);
     });
   }
