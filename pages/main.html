@@ -1,0 +1,68 @@
+<h1>List Sekolah </h1>
+<p>
+ berikut list sekolah yang telah didaftarkan untuk melakukan free trial dan POC
+</p>
+
+
+      
+<div class="col-sm-12 " ng-repeat="item in items" ng-cloak>
+  <div class="thumbnail" style="">
+      <div class="media" style="    text-align: center; padding :5%;">
+          <div class="media-left">
+              <a href="#">
+              
+              </a>
+          </div>
+          <div class="media-body"  style="text-align: left;">
+              <img src="{{item.logo_url}}" style="height: 6em; float: left; margin-right: 2em" data-toggle="modal"  data-target="#{{$index}}" >
+              <div style="border-left-style: solid; display: grid; padding-left: 0.5em; border-color: gray">
+              <b><h3 class="media-heading">{{item.nama}}</h3></b>
+              <h6 class="media-heading" style="color: dimgray">{{item.kecamatan}} {{item.kelurahan}} {{item.kota}} {{item.provinsi}} {{item.kode_pos}}</h6>
+              <h4 class="media-heading">Sales : {{item.penanggung_jawab}}</h4>
+              </div>
+          
+          </div>
+      </div>
+  </div>
+
+
+ <!-- modal -->
+ <div id="{{$index}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+
+<!-- Modal content-->
+<div class="modal-content">
+  <div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal">&times;</button>
+  <h4 class="modal-title">Detail Sekolah</h4>
+  </div>
+  <div class="modal-body" style="text-align: center">
+          <img src="{{item.logo_url}}" style="height: 10em;" >
+          <h4 class="media-heading">{{item.nama}}</h4>
+          <div style="text-align: left ; padding-top: 5%" >
+              Alamat :
+                  <h5 class="media-heading">{{item.alamat}}</h5>
+                  <h5 class="media-heading">{{item.kecamatan}} {{item.kelurahan}} {{item.kota}} {{item.provinsi}} {{item.kode_pos}}</h5>
+              Penanggung jawab :
+                  <h5 class="media-heading">{{item.penanggung_jawab}}</h5>
+              Admin :
+                  <h5 class="media-heading">{{item.admin_email}}</h5>
+              Email :
+                  <h5 class="media-heading">{{item.email}}</h5>
+              No Telp :
+                  <!-- <h5 class="media-heading">{{item.latlong}}</h5> -->
+                  <h5 class="media-heading">{{item.no_telp}}</h5>
+                  
+         
+          </div>
+  </div>
+  <div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  </div>
+</div>
+
+</div>
+</div>
+<!-- modal -->
+</div>
