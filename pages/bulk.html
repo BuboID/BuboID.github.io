@@ -1,0 +1,27 @@
+<h2>Bulk Upload</h2>
+<!-- test papa parse -->
+<script src="/js/papaparse.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+  var data;
+ 
+  function handleFileSelect(evt) {
+    var file = evt.target.files[0];
+ 
+    Papa.parse(file, {
+      header: true,
+      dynamicTyping: true,
+      complete: function(results) {
+        data = results;
+        console.log(data);
+      }
+    });
+  }
+ 
+  $(document).ready(function(){
+    $("#csv-file").change(handleFileSelect);
+  
+  });
+</script>
+<input type="file" id="csv-file" name="files"/>
+<!-- test papa parse -->
