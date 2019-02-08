@@ -4,7 +4,28 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+
+
 (function($) {
+	
+data = {"action": "bubo.link"};
+datasekolah = JSON.stringify(data);
+$(document).ready(function(){
+
+		$.ajax({
+			url: 'https://cors-anywhere.herokuapp.com/https://api.bubo.id',
+			type: 'post',
+		  data: datasekolah,
+	  	headers: {
+      'Content-Type': 'application/json','token':''},
+			dataType: 'json',
+			success: function (data) {
+				$("#downloadcms").append("<a class='button submission' href='"+data.response.data[0].url+"'>"+data.response.data[0].version+"</a>");
+			}
+		});
+		
+
+});
 
 	var	$window = $(window),
 		$body = $('body');
