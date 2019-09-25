@@ -27,6 +27,27 @@ $(document).ready(function(){
 
 });
 
+
+datax = {"action": "bubo.linkcommunity"};
+dataxsekolah = JSON.stringify(datax);
+$(document).ready(function(){
+
+		$.ajax({
+			url: 'https://cors-anywhere.herokuapp.com/https://api.bubo.id',
+			type: 'post',
+		  data: dataxsekolah,
+	  	headers: {
+      'Content-Type': 'application/json','token':''},
+			dataType: 'json',
+			success: function (data) {
+				console.log(data);
+				$("#downloadcommunity").append("<a class='button submission' href='"+data.response.data[0].url+"'>"+data.response.data[0].version+"</a>");
+			}
+		});
+		
+
+});
+
 	var	$window = $(window),
 		$body = $('body');
 
